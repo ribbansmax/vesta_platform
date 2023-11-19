@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    {% if message %}
+        <div id="success-message" class="success-message">{{ message }}</div>
+    {% endif %}
     <form action="/send-message" method="post">
         <label for="message">Drop us a line</label>
         <textarea id="message" name="message" rows="5" cols="22" maxlength="110" placeholder="Enter your message" oninput="updateCounter()"></textarea>
-        <div id="char-counter" style="text-align: right; font-size: 0.8em; color: #666;">0 / 88</div>
+        <div id="char-counter" style="text-align: right; font-size: 0.8em; color: #666;">0 / 110</div>
         <label for="from">From:</label>
         <input type="text" id="from" name="from" maxlength="22">
         <input type="submit" value="Submit">

@@ -96,7 +96,7 @@ def send_to_vestaboard(message, sender):
         else:
             print(f"Failed to send message. Status code: {response.status_code}")
 
-        return response.json()
+        return response
 
     except requests.exceptions.RequestException as e:
         # Handle any exceptions that occur during the request

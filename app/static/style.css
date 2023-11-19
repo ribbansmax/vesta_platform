@@ -69,12 +69,16 @@ input[type="submit"]:hover {
 }
 
 /* Counter styles */
+
+.textarea-container {
+  position: relative;
+}
+
 #char-counter {
-  position: absolute;
-  bottom: 10px; /* Adjust as needed to position the counter */
-  right: 10px; /* Adjust as needed to position the counter */
-  background-color: #fff; /* Match the form background */
-  padding: 0 5px;
+  text-align: right;
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 5px; /* Add a small space above the counter */
 }
 
 /* Responsive styling */
@@ -82,4 +86,18 @@ input[type="submit"]:hover {
   body, form {
       padding: 10px;
   }
+}
+
+/* Success message styling */
+.success-message {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 10px; /* Some padding */
+  margin-bottom: 15px; /* Space below the message */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Hide the message by default */
+.success-message.hidden {
+  display: none;
 }
