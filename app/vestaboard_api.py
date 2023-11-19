@@ -35,35 +35,47 @@ def string_to_vestaboard_codes(input_string):
 
     return codes
 
-def format_for_vestaboard(input_string):
+def format_for_vestaboard(input_string, sender):
     """
     Formats a string into a 6x22 Vestaboard grid.
+    Adds the sender's name in the sixth row.
     """
     # Convert the string to Vestaboard character codes
     codes = string_to_vestaboard_codes(input_string)
+    message_from = string_to_vestaboard_codes("From: " + sender)
 
     # Initialize a 6x22 grid with all zeros (blank)
     grid = [[0 for _ in range(22)] for _ in range(6)]
 
-    # Place the codes into the grid
-    row, col = 0, 1  # Starting position, adjust as needed
+    # Place the main message codes into the grid
+    row, col = 0, 0  # Starting position at the top left
     for code in codes:
-        grid[row][col] = code
+        grid[row][col] = int(code)
         col += 1
         if col >= 22:  # Move to the next row if the end of the row is reached
             col = 0
             row += 1
-            if row >= 6:  # Stop if the grid is full
+            if row >= 5:  # Stop if we reach the fifth row to save space for sender
                 break
+
+    # Append the sender's name on the sixth row
+    # Reset col to 0 if you want the sender's name to start from the first column
+    # or adjust as needed if you want some padding
+    col = 0
+    for code in message_from:
+        grid[5][col] = int(code)  # 5th index is the sixth row
+        col += 1
+        if col >= 22:  # No need to check for row overflow since it's the last row
+            break
 
     return grid
 
-def send_to_vestaboard(message):
+def send_to_vestaboard(message, sender):
     """
     Sends a message to the Vestaboard.
     """
     # Format the message for the Vestaboard
-    formatted_message = format_for_vestaboard(message)
+    formatted_message = format_for_vestaboard(message, sender)
 
     # URL for the Vestaboard API
     url = "https://rw.vestaboard.com/"

@@ -1,0 +1,85 @@
+/* Reset some default styling */
+body, h1, h2, h3, p, form, input, textarea, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* Apply a natural box layout model to all elements */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+/* Set base body styling */
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Form styling */
+form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Label styling */
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Textarea and input field styling */
+textarea, input[type="text"] {
+  width: calc(100% - 22px); /* full width - padding */
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Submit button styling */
+input[type="submit"] {
+  width: 100%;
+  background: #0056b3;
+  color: #fff;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background: #003d82;
+}
+
+/* Counter styles */
+#char-counter {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed to position the counter */
+  right: 10px; /* Adjust as needed to position the counter */
+  background-color: #fff; /* Match the form background */
+  padding: 0 5px;
+}
+
+/* Responsive styling */
+@media only screen and (max-width: 600px) {
+  body, form {
+      padding: 10px;
+  }
+}
