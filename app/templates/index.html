@@ -12,19 +12,51 @@
     {% endif %}
     <form action="/send-message" method="post">
         <label for="message">Drop us a line</label>
-        <textarea id="message" name="message" rows="5" cols="22" maxlength="110" placeholder="Enter your message" oninput="updateCounter()"></textarea>
+        <!-- <textarea id="message" name="message" rows="5" cols="22" maxlength="110" placeholder="Enter your message" oninput="updateCounter()"></textarea> -->
+        <input type="text" id="input1" name="input1" placeholder="Enter your message" maxlength="22" oninput="autoTab(this, 'input2'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input2')" />
+        <input type="text" id="input2" name="input2" maxlength="22" oninput="autoTab(this, 'input3'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input3')" />
+        <input type="text" id="input3" name="input3" maxlength="22" oninput="autoTab(this, 'input4'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input4')" />
+        <input type="text" id="input4" name="input4" maxlength="22" oninput="autoTab(this, 'input5'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input5')" />
+        <input type="text" id="input5" name="input5" maxlength="22" oninput="updateCounter();" onkeydown="fillAndGoToNext(event, '')" />
+
         <div id="char-counter" style="text-align: right; font-size: 0.8em; color: #666;">0 / 110</div>
         <label for="from">From:</label>
-        <input type="text" id="from" name="from" maxlength="22">
+        <input type="text" id="from" name="from" maxlength="17">
         <input type="submit" value="Submit">
     </form>
     <script>
       function updateCounter() {
-          var message = document.getElementById('message').value;
+          var totalLength = 0;
+          for (var i = 1; i <= 5; i++) {
+              totalLength += document.getElementById('input' + i).value.length;
+          }
           var counter = document.getElementById('char-counter');
-          counter.textContent = message.length + " / 110";
+          counter.textContent = totalLength + " / 110";
       }
-      window.onload = updateCounter; // Initialize the counter on page load
+
+      function autoTab(currentField, nextFieldID) {
+          if (currentField.value.length >= currentField.maxLength) {
+              document.getElementById(nextFieldID).focus();
+          }
+      }
+      function fillAndGoToNext(event, nextFieldID) {
+          if (event.key === 'Enter' || event.key === 'Tab') {
+              event.preventDefault(); // Prevent the default action of the Enter key
+              var currentField = event.target;
+              var remainingSpaces = currentField.maxLength - currentField.value.length;
+              currentField.value += ' '.repeat(remainingSpaces);
+              updateCounter(); // Update the character counter
+
+              if (nextFieldID !== '') {
+                  document.getElementById(nextFieldID).focus();
+              }
+          }
+      }
+
+      window.onload = function() {
+          document.getElementById('input1').focus(); // Set focus to the first field when the page loads
+          updateCounter(); // Initialize the counter on page load
+      };
     </script>
 </body>
 </html>

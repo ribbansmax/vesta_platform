@@ -11,7 +11,14 @@ def index():
 
 @app.route('/send-message', methods=['POST'])
 def handle_message():
-    message = request.form['message']
+    # Concatenate the contents of the five input fields
+    print(request.form)
+    message_lines = [
+        request.form.get(f'input{i}', '') for i in range(1, 6)
+    ]
+    print("Message lines:", message_lines)
+    message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
+    print("Combined message:", message)
     from_name = request.form['from']
     # Process your message as needed and call send_to_vestaboard
     response = send_to_vestaboard(message, from_name)

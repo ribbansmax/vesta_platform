@@ -74,7 +74,7 @@ def send_to_vestaboard(message, sender):
     """
     Sends a message to the Vestaboard.
     """
-    # Format the message for the Vestaboard
+    # Format the message for the Vestaboard from a basic string
     formatted_message = format_for_vestaboard(message, sender)
 
     # URL for the Vestaboard API

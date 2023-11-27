@@ -101,3 +101,11 @@ input[type="submit"]:hover {
 .success-message.hidden {
   display: none;
 }
+
+input[type="text"] {
+  margin-bottom: 0px; /* Space between fields */
+  width: 100%; /* Adjust width as needed */
+  padding: 5px;
+  /* Additional styling */
+}
+
