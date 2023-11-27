@@ -1,8 +1,22 @@
 from app import app
 from flask import Flask, Blueprint, request, jsonify, render_template, redirect, url_for, flash
+from datetime import datetime
+import pytz
 from .vestaboard_api import send_to_vestaboard
 
-# bp = Blueprint('routes', __name__)
+def check_for_quiet_hours():
+    # Define the CST timezone
+    cst = pytz.timezone('America/Chicago')
+    
+    # Get the current time in CST
+    current_time = datetime.now(cst).time()
+
+    # Define quiet hours (outside 10AM to 10PM CST)
+    start_time = datetime.strptime('10:00:00', '%H:%M:%S').time()
+    end_time = datetime.strptime('22:00:00', '%H:%M:%S').time()
+
+    # Return True if current time is outside of allowed hours, otherwise False
+    return not (start_time <= current_time <= end_time)
 
 @app.route('/')
 def index():
@@ -11,6 +25,8 @@ def index():
 
 @app.route('/send-message', methods=['POST'])
 def handle_message():
+    if check_for_quiet_hours():
+        return redirect(url_for('index', message='Failed to send message: please try again during the hours of 10AM to 10PM CST to not wake anyone up'))
     # Concatenate the contents of the five input fields
     print(request.form)
     message_lines = [
