@@ -52,7 +52,7 @@ def handle_message():
     from_name = request.form['from']
     if not from_name:
         # Capture the user's IP address
-        user_ip = request.remote_addr
+        user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
         from_name = get_city(user_ip)
     # Process your message as needed and call send_to_vestaboard
     response = send_to_vestaboard(message, from_name)
