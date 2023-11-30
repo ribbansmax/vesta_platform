@@ -22,12 +22,17 @@ def check_for_quiet_hours():
     return not (start_time <= current_time <= end_time)
 
 def get_city(ip):
-    app.logger.info("Client IP: %s",ip)
+    app.logger.info("Client IP: %s", ip)
+    print(f'Client IP: {ip}')
+
     load_dotenv()
     IPINFO_ACCESS_TOKEN = os.getenv("IPINFO_ACCESS_TOKEN")
     handler = ipinfo.getHandler(IPINFO_ACCESS_TOKEN)
     details = handler.getDetails(ip)
     city = details.all.get("city") or 'local'
+
+    app.logger.info("Client city: %s", city)
+    print(f'Client city: {city}')
     return city
 
 @app.route('/')
