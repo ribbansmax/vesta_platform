@@ -26,7 +26,6 @@ def get_city(ip):
     IPINFO_ACCESS_TOKEN = os.getenv("IPINFO_ACCESS_TOKEN")
     handler = ipinfo.getHandler(IPINFO_ACCESS_TOKEN)
     details = handler.getDetails(ip)
-    print(details.all)
     city = details.all.get("city") or 'local'
     return city
 
@@ -40,18 +39,14 @@ def handle_message():
     if check_for_quiet_hours():
         return redirect(url_for('index', message='Failed to send message: please try again during the hours of 10AM to 10PM CST to not wake anyone up'))
     # Concatenate the contents of the five input fields
-    print(request.form)
     message_lines = [
-        request.form.get(f'input{i}', '') for i in range(1, 6)
+        request.form.get(f'input{i}', '').ljust(22) for i in range(1, 6)
     ]
-    print("Message lines:", message_lines)
     message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
-    print("Combined message:", message)
     from_name = request.form['from']
     if not from_name:
         # Capture the user's IP address
         user_ip = request.remote_addr
-        print("User IP:", user_ip)
         from_name = get_city(user_ip)
     # Process your message as needed and call send_to_vestaboard
     response = send_to_vestaboard(message, from_name)
