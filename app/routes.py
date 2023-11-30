@@ -3,6 +3,9 @@ from flask import Flask, Blueprint, request, jsonify, render_template, redirect,
 from datetime import datetime
 import pytz
 from .vestaboard_api import send_to_vestaboard
+import ipinfo
+from dotenv import load_dotenv
+import os
 
 def check_for_quiet_hours():
     # Define the CST timezone
@@ -17,6 +20,15 @@ def check_for_quiet_hours():
 
     # Return True if current time is outside of allowed hours, otherwise False
     return not (start_time <= current_time <= end_time)
+
+def get_city(ip):
+    load_dotenv()
+    IPINFO_ACCESS_TOKEN = os.getenv("IPINFO_ACCESS_TOKEN")
+    handler = ipinfo.getHandler(IPINFO_ACCESS_TOKEN)
+    details = handler.getDetails(ip)
+    print(details.all)
+    city = details.all.get("city") or 'local'
+    return city
 
 @app.route('/')
 def index():
@@ -36,6 +48,11 @@ def handle_message():
     message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
     print("Combined message:", message)
     from_name = request.form['from']
+    if not from_name:
+        # Capture the user's IP address
+        user_ip = request.remote_addr
+        print("User IP:", user_ip)
+        from_name = get_city(user_ip)
     # Process your message as needed and call send_to_vestaboard
     response = send_to_vestaboard(message, from_name)
     if response and response.status_code == 200:
