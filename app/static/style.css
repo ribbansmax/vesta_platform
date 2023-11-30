@@ -53,19 +53,16 @@ textarea, input[type="text"] {
 /* Submit button styling */
 input[type="submit"] {
   width: 100%;
-  background: #0056b3;
-  color: #fff;
-  padding: 15px;
+  padding: 10px;
   border: none;
+  background-color: #007bff;
+  color: white;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 18px;
-  text-transform: uppercase;
-  transition: background 0.3s ease;
 }
 
 input[type="submit"]:hover {
-  background: #003d82;
+  background-color: #0056b3;
 }
 
 /* Counter styles */
@@ -109,3 +106,22 @@ input[type="text"] {
   /* Additional styling */
 }
 
+.color-mapping-banner {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.color {
+  margin: 5px;
+  padding: 5px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #ddd; /* Slight outline */
+  border-radius: 4px; /* Optional: rounded corners */
+}
