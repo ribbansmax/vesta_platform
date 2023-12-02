@@ -6,6 +6,7 @@ from .vestaboard_api import send_to_vestaboard
 import ipinfo
 from dotenv import load_dotenv
 import os
+from better_profanity import profanity
 
 def check_for_quiet_hours():
     # Define the CST timezone
@@ -49,13 +50,18 @@ def handle_message():
         request.form.get(f'input{i}', '').ljust(22) for i in range(1, 6)
     ]
     message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
+    if profanity.contains_profanity(message):
+        print(f'Message contains profanity: {message}')
+        censored_message = profanity.censor(message, '-')
+    else:
+        censored_message = message
     from_name = request.form['from']
     if not from_name:
         # Capture the user's IP address
         user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
         from_name = get_city(user_ip)
     # Process your message as needed and call send_to_vestaboard
-    response = send_to_vestaboard(message, from_name)
+    response = send_to_vestaboard(censored_message, from_name)
     if response and response.status_code == 200:
         return redirect(url_for('index', message='Message sent successfully!'))
     else:
