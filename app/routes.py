@@ -51,6 +51,7 @@ def handle_message():
     ]
     message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
     print(f'Message: {message}')
+    print(f'From city: {get_city(user_ip)}')
     if profanity.contains_profanity(message):
         print(f'Message contains profanity: {message}')
         censored_message = profanity.censor(message, '-')
