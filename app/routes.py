@@ -50,6 +50,7 @@ def handle_message():
         request.form.get(f'input{i}', '').ljust(22) for i in range(1, 6)
     ]
     message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
+    print(f'Message: {message}')
     if profanity.contains_profanity(message):
         print(f'Message contains profanity: {message}')
         censored_message = profanity.censor(message, '-')
