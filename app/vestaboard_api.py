@@ -22,7 +22,7 @@ vestaboard_characters = {
     "{": 65,  # Yellow
     "}": 66,  # Green
     "|": 67,  # Blue
-    "*": 68,  # Violet
+    "~": 68,  # Violet
     "^": 69,  # White
     "Black": 70, "Filled": 71
 }
