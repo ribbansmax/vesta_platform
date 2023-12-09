@@ -51,6 +51,7 @@ def handle_message():
     ]
     message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
     print(f'Message: {message}')
+    user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
     print(f'From city: {get_city(user_ip)}')
     if profanity.contains_profanity(message):
         print(f'Message contains profanity: {message}')
@@ -60,7 +61,6 @@ def handle_message():
     from_name = request.form['from']
     if not from_name:
         # Capture the user's IP address
-        user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
         from_name = get_city(user_ip)
     # Process your message as needed and call send_to_vestaboard
     response = send_to_vestaboard(censored_message, from_name)
