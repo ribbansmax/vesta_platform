@@ -62,7 +62,10 @@
             <input type="submit" value="Submit">
         </div>
 
-      <div class="color-mapping-banner">
+      <div class="color-mapping-banner" id="colorMappingBanner" style="display: none;">
+        <div class="color-label" style="width: 100%; text-align: center; margin-bottom: 10px;">
+            <label>Input color character:</label>
+        </div>
         <div class="color" data-symbol="[">Red</div>
         <div class="color" data-symbol="]">Orange</div>
         <div class="color" data-symbol="{">Yellow</div>
@@ -70,7 +73,7 @@
         <div class="color" data-symbol="|">Blue</div>
         <div class="color" data-symbol="~">Violet</div>
         <div class="color" data-symbol="^">White</div>
-    </div>
+      </div>
     </form>
     <script>
         function updateCounter() {
@@ -143,6 +146,12 @@
             }
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
+
+            if (tabName === 'CustomMessage') {
+        document.getElementById('colorMappingBanner').style.display = 'flex'; // Or 'block', depending on your layout
+            } else {
+                document.getElementById('colorMappingBanner').style.display = 'none';
+            }
         }
 
         let lastSelectedButton = null;
