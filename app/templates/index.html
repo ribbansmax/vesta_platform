@@ -10,27 +10,57 @@
     {% if message %}
         <div id="success-message" class="success-message">{{ message }}</div>
     {% endif %}
+
     <form action="/send-message" method="post">
-      <div class="form-group">
-          <label for="message">Drop us a line</label>
-          <div class="inputs">
-              <input type="text" id="input1" name="input1" placeholder="Enter your message" maxlength="22" oninput="autoTab(this, 'input2'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input2')" />
-              <input type="text" id="input2" name="input2" maxlength="22" oninput="autoTab(this, 'input3'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input3')" />
-              <input type="text" id="input3" name="input3" maxlength="22" oninput="autoTab(this, 'input4'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input4')" />
-              <input type="text" id="input4" name="input4" maxlength="22" oninput="autoTab(this, 'input5'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input5')" />
-              <input type="text" id="input5" name="input5" maxlength="22" oninput="updateCounter();" onkeydown="fillAndGoToNext(event, '')" />
-          </div>
-          <div id="char-counter">0 / 110</div>
-      </div>
+        <div class="tab">
+            <button type="button" class="tablinks" onclick="openTab(event, 'CustomMessage')">Custom Message</button>
+            <button type="button" class="tablinks" onclick="openTab(event, 'PreWritten')">Pre-Written Message</button>
+        </div>
 
-      <div class="form-group">
-          <label for="from">From:</label>
-          <input type="text" id="from" name="from" maxlength="17">
-      </div>
+        <!-- Custom Message Tab Content -->
+        <div id="CustomMessage" class="tabcontent" style="display:block;">
+            <div class="form-group">
+                <label for="message">Drop us a line</label>
+                <div class="inputs">
+                    <input type="text" id="input1" name="input1" placeholder="Enter your message" maxlength="22" oninput="autoTab(this, 'input2'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input2')" />
+                    <input type="text" id="input2" name="input2" maxlength="22" oninput="autoTab(this, 'input3'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input3')" />
+                    <input type="text" id="input3" name="input3" maxlength="22" oninput="autoTab(this, 'input4'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input4')" />
+                    <input type="text" id="input4" name="input4" maxlength="22" oninput="autoTab(this, 'input5'); updateCounter();" onkeydown="fillAndGoToNext(event, 'input5')" />
+                    <input type="text" id="input5" name="input5" maxlength="22" oninput="updateCounter();" onkeydown="fillAndGoToNext(event, '')" />
+                </div>
+                <div id="char-counter">0 / 110</div>
+            </div>
+        </div>
 
-      <div class="form-group">
-          <input type="submit" value="Submit">
-      </div>
+        <!-- Pre-Written Notes Tab Content -->
+        <div id="PreWritten" class="tabcontent" style="display:none;">
+            <h3>Select a Note</h3>
+            <div class="pre-written-notes">
+                <div class="note-card" onclick="selectNote('                        Have a great day!', this)">
+                    <p>Have a great day!</p>
+                </div>
+                <div class="note-card" onclick="selectNote('                         Wishing you all          the best!', this)">
+                    <p>Wishing you all the best!</p>
+                </div>
+                <div class="note-card" onclick="selectNote('     We love corn!    [corn[corn[corn[corn[ ]corn]corn]corn]corn] {corn{corn{corn{corn{ ^corn^corn^corn^corn^', this)">
+                    <p>We love corn!</p>
+                </div>
+                <div class="note-card" onclick="selectNote(' [[ [[         || ||  [[[[[[[ ~~ ~~ |||||||  [[[[[ ~~~~~~~ |||||     [    ~~~~~    |              ~', this)">
+                    <p>Hearts</p>
+                </div>
+                <!-- Add more pre-written notes as needed -->
+            </div>
+            <input type="hidden" id="selectedMessage" name="message">
+        </div>
+
+        <div class="form-group">
+            <label for="from">From:</label>
+            <input type="text" id="from" name="from" maxlength="17">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Submit">
+        </div>
 
       <div class="color-mapping-banner">
         <div class="color" data-symbol="[">Red</div>
@@ -74,6 +104,7 @@
         window.onload = function() {
             document.getElementById('input1').focus(); // Set focus to the first field when the page loads
             updateCounter(); // Initialize the counter on page load
+            document.querySelector('.tablinks').click();
         };
 
         function handleColorClick(symbol) {
@@ -100,6 +131,40 @@
                 });
             });
         });
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        let lastSelectedButton = null;
+
+        function selectNote(note, button) {
+            document.getElementById('selectedMessage').value = note;
+            console.log("Selected message set to: ", note);
+            // Check if there's a previously selected button and reset its style
+            if (lastSelectedButton) {
+                lastSelectedButton.style.backgroundColor = ''; // Reset the previous button's color
+            }
+
+            // Update the background color of the currently selected button
+            button.style.backgroundColor = '#4CAF50';
+            
+            // Keep track of the currently selected button
+            lastSelectedButton = button;
+            // Assuming there's a mechanism to handle the selected note
+            // For example, setting it as the value of a hidden input form
+            // and possibly showing it in a preview element
+            // alert("Note selected: " + note); // Placeholder action
+        }
     </script>
 </body>
 </html>

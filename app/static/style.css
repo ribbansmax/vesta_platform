@@ -30,6 +30,9 @@ form {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 0; /* Remove top-left border-radius of the form */
+  border-top-right-radius: 0; /* Remove top-right border-radius of the form */
+  margin-top: 0; /* Remove top margin to attach directly below the tabs */
 }
 
 /* Label styling */
@@ -124,4 +127,80 @@ input[type="text"] {
   text-align: center;
   border: 1px solid #ddd; /* Slight outline */
   border-radius: 4px; /* Optional: rounded corners */
+}
+/* Tab container styling */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ddd;
+  background-color: #f1f1f1;
+  border-bottom: none; /* Remove bottom border to attach tabs to the form */
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  border-bottom: 2px solid transparent; /* Add a transparent bottom border to maintain button height when active */
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #fff;
+  border-bottom: 2px solid #fff; /* Make active tab and content area look connected */
+}
+
+/* Tab content styling */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-top: none; /* Ensure content is visually part of the tab */
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.note-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.note-card:hover {
+  background-color: #f0f0f0;
+}
+
+.pre-written-notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.pre-written-notes button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pre-written-notes button:hover {
+  background-color: #0056b3;
 }

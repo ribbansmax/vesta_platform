@@ -46,10 +46,16 @@ def handle_message():
     if check_for_quiet_hours():
         return redirect(url_for('index', message='Failed to send message: please try again during the hours of 10AM to 10PM CST to not wake anyone up'))
     # Concatenate the contents of the five input fields
+    prefab_message = request.form.getlist('message')
+    print(f'Prefab Message: {prefab_message}')
     message_lines = [
         request.form.get(f'input{i}', '').ljust(22) for i in range(1, 6)
     ]
-    message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
+    custom_message = ''.join(message_lines).strip()  # Combine and remove trailing whitespace
+    if custom_message:
+        message = custom_message
+    else:
+        message = prefab_message[0]
     print(f'Message: {message}')
     user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
     print(f'From city: {get_city(user_ip)}')
