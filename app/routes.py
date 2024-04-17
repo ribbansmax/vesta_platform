@@ -36,6 +36,10 @@ def get_city(ip):
     print(f'Client city: {city}')
     return city
 
+@app.route('/display')
+def display():
+    url = f"https://digital.vestaboard.com/{os.getenv('DIGITAL_VESTABOARD_KEY')}"
+    return render_template('display.html', url=url)
 @app.route('/')
 def index():
     message = request.args.get('message', '')  # Retrieve the message if it exists
